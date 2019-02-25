@@ -17,5 +17,7 @@ public class CreatureAi {
 		
 	}
 
-	
+	public void onNotify(String message) {
+		
+	}
 }

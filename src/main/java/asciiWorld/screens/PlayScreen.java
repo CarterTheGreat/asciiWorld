@@ -51,7 +51,9 @@ public class PlayScreen implements Screen{
 		int top = getScrollY();
 		
 		displayTiles(terminal, left, top);
-		terminal.write(player.glyph(), player.x - left, player.y - top, player.color());
+		displayMessages(terminal, messages);
+		
+		terminal.writeCenter("-- hi --", 23);
 
 		String stats = String.format(" %3d/%3d hp", player.hp(), player.maxHp());
 	    terminal.write(stats, 1, 23);

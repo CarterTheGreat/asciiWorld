@@ -1,7 +1,5 @@
 package asciiWorld;
 
-import asciiPanel.AsciiPanel;
-
 public class FungusAi extends CreatureAi {
 
 	private CreatureFactory factory;
@@ -13,14 +11,20 @@ public class FungusAi extends CreatureAi {
 	}
 	
 	public void onUpdate() {
-		if(spreadCount < 5 && Math.random() < .2) {
+		if(spreadCount < 5 && Math.random() < .025) {
 			spread();
 		}
 	}
 	
 	public void spread() {
-		int x = creature.x + (int)(Math.random()*11) - 5;  
-		int y = creature.y + (int)(Math.random()*11) - 5;
+		
+		//Spread out growth
+		//int x = creature.x + (int)(Math.random()*11) - 5; 
+		//int y = creature.y + (int)(Math.random()*11) - 5;
+		
+		//Globular growth
+		int x = creature.x + (int)((Math.random() - .5) * 4);
+		int y = creature.y + (int)((Math.random() - .5) * 4);
 		
 		if(!creature.canEnter(x,y))
 			return;

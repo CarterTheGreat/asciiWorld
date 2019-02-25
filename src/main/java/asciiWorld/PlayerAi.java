@@ -1,9 +1,15 @@
 package asciiWorld;
 
+import java.util.List;
+
 public class PlayerAi extends CreatureAi{
 
-	public PlayerAi(Creature creature) {
+	
+	private List<String> messages;
+	
+	public PlayerAi(Creature creature, List<String> messages) {
 		super(creature);
+		this.messages = messages;
 	}
 
 	public void onEnter(int x, int y, Tile tile) {
@@ -15,5 +21,8 @@ public class PlayerAi extends CreatureAi{
 		}
 	}
 	
+	public void onNotify(String message) {
+		messages.add(message);
+	}
 	
 }

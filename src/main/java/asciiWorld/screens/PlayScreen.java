@@ -1,6 +1,8 @@
 package asciiWorld.screens;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import asciiPanel.AsciiPanel;
 import asciiWorld.Creature;
@@ -14,10 +16,12 @@ public class PlayScreen implements Screen{
 	private Creature player;
     private int screenWidth;
     private int screenHeight;
-
+    private List<String> messages;
+     
     public PlayScreen(){
         screenWidth = 80;
         screenHeight = 21;
+        messages = new ArrayList<String>();
         createWorld();
         
         CreatureFactory creatureFactory = new CreatureFactory(world);
@@ -25,7 +29,7 @@ public class PlayScreen implements Screen{
 	}
 	
 	private void createCreatures(CreatureFactory creatureFactory){
-		player = creatureFactory.newPlayer();
+		player = creatureFactory.newPlayer(messages);
 		
 		for (int i = 0; i < 8; i++){
 			creatureFactory.newFungus();
@@ -49,7 +53,8 @@ public class PlayScreen implements Screen{
 		displayTiles(terminal, left, top);
 		terminal.write(player.glyph(), player.x - left, player.y - top, player.color());
 
-		terminal.writeCenter("-- press [escape] to lose or [enter] to win --", 22);
+		String stats = String.format(" %3d/%3d hp", player.hp(), player.maxHp());
+	    terminal.write(stats, 1, 23);
 	}
 	
 	//This is really inefficient - it does width*height*creatures ,,,, it should do width*height + creatures	
@@ -66,6 +71,14 @@ public class PlayScreen implements Screen{
 					terminal.write(world.glyph(wx, wy), x, y, world.color(wx, wy));
 			}
 		}
+	}
+	
+	private void displayMessages(AsciiPanel terminal, List<String> messages) {
+		int top = screenHeight - messages.size();
+		for(int i = 0; i < messages.size(); i++) {
+			terminal.writeCenter(messages.get(i), top + i);
+		}
+		messages.clear();
 	}
 		
 		
@@ -87,6 +100,8 @@ public class PlayScreen implements Screen{
 		case KeyEvent.VK_B: player.moveBy(-1, 1); break;
 		case KeyEvent.VK_N: player.moveBy( 1, 1); break;
 		}
+		
+		world.update();
 		
 		return this;
 	}

@@ -71,10 +71,11 @@ public class World {
 		creatures.remove(creature);
 	}
 	
-	public void update() {
-		for(Creature creature: creatures) {
-			creature.update();
-		}
+	public void update(){
+	    List<Creature> toUpdate = new ArrayList<Creature>(creatures);
+	    for (Creature creature : toUpdate){
+	        creature.update();
+	    }
 	}
 	
 	
